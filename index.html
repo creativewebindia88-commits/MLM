@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaSpring · Compensation Plans</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1e2b3a;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    :root {
+      --primary: #f37c0c;
+      --primary-light: #f89514;
+      --accent: #f59e0b;
+      --accent-soft: #fbbf24;
+      --soft-bg: #f8fcff;
+      --gray-light: #eef4f9;
+      --gray-mid: #94a3b8;
+      --text-dark: #053779;
+      --text-muted: #334e68;
+      --white: #ffffff;
+      --shadow-sm: 0 8px 20px rgba(0,40,70,0.06);
+      --shadow-md: 0 12px 30px rgba(0,30,60,0.08);
+      --radius: 24px;
+    }
+
+    /* nav */
+    .navbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; flex-wrap: wrap; gap: 16px;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.8rem; color: var(--primary); }
+    .logo i { color: var(--accent); font-size: 2rem; }
+    .logo span { color: var(--text-dark); }
+    .nav-links { display: flex; gap: 32px; font-weight: 500; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--primary); }
+
+    .btn {
+      display: inline-block; padding: 12px 28px; border-radius: 60px;
+      font-weight: 600; text-decoration: none; transition: .2s; border: 2px solid transparent;
+      cursor: default; font-size: .95rem;
+    }
+    .btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 6px 14px rgba(12,74,110,.2); }
+    .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); }
+    .btn-outline { background: transparent; border-color: var(--primary); color: var(--primary); }
+    .btn-outline:hover { background: var(--gray-light); }
+    .btn-accent { background: var(--accent); border-color: var(--accent); color: #1e2b3a; font-weight: 700; box-shadow: 0 6px 14px rgba(245,158,11,.25); }
+    .btn-accent:hover { background: var(--accent-soft); transform: translateY(-2px); }
+
+    /* hero */
+    .hero { display: flex; align-items: center; gap: 48px; padding: 40px 0 60px; flex-wrap: wrap; }
+    .hero-content { flex: 1 1 400px; }
+    .hero-badge {
+      display: inline-block; background: var(--gray-light); color: var(--primary);
+      font-weight: 600; font-size: .85rem; padding: 6px 16px; border-radius: 60px;
+      margin-bottom: 20px;
+    }
+    .hero h1 { font-size: 3.3rem; font-weight: 800; line-height: 1.2; letter-spacing: -.03em; margin-bottom: 20px; }
+    .hero h1 .highlight { color: var(--primary); border-bottom: 4px solid var(--accent); display: inline-block; line-height: 1.1; }
+    .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 540px; margin-bottom: 32px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-visual {
+      flex: 1 1 380px; background: linear-gradient(145deg,#e5f0f9,#d6e8f5);
+      border-radius: 40px; padding: 30px; display: flex; justify-content: center; align-items: center;
+      box-shadow: var(--shadow-md);
+    }
+    .network-graphic { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; max-width: 320px; }
+    .node {
+      background: #fff; border-radius: 40px; padding: 16px 18px; font-weight: 600;
+      color: var(--primary); box-shadow: 0 8px 18px rgba(0,0,0,.03);
+      display: flex; align-items: center; gap: 8px; border: 1px solid rgba(12,74,110,.08);
+    }
+    .node i { color: var(--accent); }
+    .node.center-node { background: var(--primary); color: #fff; border: none; font-weight: 700; padding: 16px 24px; }
+    .node.center-node i { color: #fff; }
+
+    /* stats */
+    .stats {
+      display: flex; justify-content: space-between; gap: 24px; background: var(--soft-bg);
+      padding: 32px 40px; border-radius: 40px; margin: 20px 0 60px; flex-wrap: wrap;
+      border: 1px solid #ddecf7;
+    }
+    .stat-item { display: flex; flex-direction: column; align-items: center; flex: 1 1 140px; }
+    .stat-number { font-size: 2.3rem; font-weight: 800; color: var(--primary); line-height: 1.2; }
+    .stat-label { font-size: .95rem; color: var(--text-muted); font-weight: 500; text-align: center; }
+
+    /* section head */
+    .section-head { text-align: center; margin-bottom: 40px; }
+    .section-tag {
+      color: var(--accent); font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; font-size: .85rem; margin-bottom: 10px; display: block;
+    }
+    .section-head h2 { font-size: 2.5rem; font-weight: 800; letter-spacing: -.02em; }
+    .section-head p { color: var(--text-muted); font-size: 1.1rem; max-width: 640px; margin: 12px auto 0; }
+
+    /* steps */
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 30px; margin-bottom: 70px; }
+    .step-card {
+      background: #fff; border-radius: var(--radius); padding: 32px 24px;
+      box-shadow: var(--shadow-sm); border: 1px solid #e2edf7; transition: .2s; text-align: center;
+    }
+    .step-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: #b8d6eb; }
+    .step-icon {
+      background: #e3f0fa; width: 70px; height: 70px; border-radius: 30px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px; font-size: 2rem; color: var(--primary);
+    }
+    .step-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; }
+    .step-card p { color: var(--text-muted); font-size: .98rem; }
+
+    /* ===== COMP PLAN EXPLORER (new) ===== */
+    .plans-section { margin: 70px 0; }
+
+    .plan-tabs {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+      margin-bottom: 36px;
+    }
+    .plan-tab {
+      background: var(--gray-light); border: 1px solid #d6e6f3; color: var(--text-muted);
+      padding: 12px 26px; border-radius: 60px; font-weight: 600; font-size: .95rem;
+      cursor: pointer; transition: .2s; user-select: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .plan-tab i { color: var(--primary); font-size: .85rem; }
+    .plan-tab:hover { background: #e1effa; border-color: #b8d6eb; }
+    .plan-tab.active {
+      background: var(--primary); border-color: var(--primary); color: #fff;
+      box-shadow: 0 8px 18px rgba(12,74,110,.22);
+    }
+    .plan-tab.active i { color: var(--accent-soft); }
+
+    .plan-panel { display: none; }
+    .plan-panel.active { display: block; animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    .plan-meta {
+      display: flex; flex-wrap: wrap; gap: 18px; justify-content: center;
+      margin-bottom: 28px;
+    }
+    .meta-chip {
+      background: #fff; border: 1px solid #ddecf7; border-radius: 18px;
+      padding: 14px 22px; display: flex; flex-direction: column; align-items: center;
+      min-width: 140px; box-shadow: var(--shadow-sm);
+    }
+    .meta-chip .label { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--gray-mid); font-weight: 600; }
+    .meta-chip .value { font-size: 1.35rem; font-weight: 800; color: var(--primary); }
+    .meta-chip .value.accent { color: #b45309; }
+
+    /* plan table */
+    .table-wrap {
+      background: #fff; border-radius: 28px; border: 1px solid #e2edf7;
+      box-shadow: var(--shadow-sm); overflow-x: auto; margin-bottom: 16px;
+    }
+    table.plan-table {
+      width: 100%; border-collapse: collapse; font-size: .92rem; min-width: 720px;
+    }
+    .plan-table thead th {
+      background: #f2f9ff; color: var(--primary); text-align: left;
+      padding: 14px 18px; font-weight: 700; font-size: .8rem;
+      text-transform: uppercase; letter-spacing: .05em;
+      border-bottom: 2px solid #d6e9f8; white-space: nowrap;
+    }
+    .plan-table tbody td {
+      padding: 12px 18px; border-bottom: 1px solid #eef5fb; color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .plan-table tbody tr:last-child td { border-bottom: none; }
+    .plan-table tbody tr:hover td { background: #f9fcff; }
+    .plan-table td:first-child { font-weight: 700; color: var(--text-dark); }
+    .plan-table .rate { font-weight: 600; color: var(--primary); }
+    .plan-table .earn { font-weight: 700; color: #0d7a4c; }
+    .plan-table .team { font-weight: 600; }
+    .plan-table .muted { color: var(--gray-mid); }
+
+    .plan-note {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: 18px;
+      padding: 16px 20px; color: #78350f; font-size: .9rem; margin-top: 18px;
+    }
+    .plan-note i { color: var(--accent); font-size: 1.1rem; margin-top: 2px; }
+
+    .upgrade-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #e8f2fb; color: var(--primary); font-weight: 600;
+      padding: 8px 16px; border-radius: 60px; font-size: .85rem;
+      margin-top: 10px;
+    }
+    .upgrade-badge i { color: var(--accent); }
+
+    /* earnings visualizer */
+    .earnings-box {
+      margin-top: 40px; background: linear-gradient(135deg,#0c4a6e,#135a7f);
+      border-radius: 36px; padding: 36px 40px; color: #fff;
+      display: flex; flex-wrap: wrap; gap: 30px; align-items: center;
+      box-shadow: 0 22px 35px -18px rgba(0,40,70,.35);
+    }
+    .earnings-box .left { flex: 2 1 380px; }
+    .earnings-box .right { flex: 1 1 220px; display: flex; flex-direction: column; gap: 14px; }
+    .earnings-box h3 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -.01em; }
+    .earnings-box p { color: #c9e2f0; font-size: .98rem; margin-bottom: 18px; }
+    .range-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .range-row label { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #aac7dd; }
+    input[type="range"] {
+      -webkit-appearance: none; appearance: none; flex: 1; min-width: 160px;
+      height: 8px; border-radius: 20px; background: rgba(255,255,255,.18); outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 22px; height: 22px;
+      border-radius: 50%; background: var(--accent); cursor: pointer;
+      border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 22px; height: 22px; border-radius: 50%; background: var(--accent);
+      cursor: pointer; border: 3px solid #fff;
+    }
+    .level-pill {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 14px; padding: 12px 16px; font-weight: 600; font-size: .9rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    }
+    .level-pill .v { color: var(--accent-soft); font-weight: 800; font-size: 1.1rem; }
+
+    /* testimonial */
+    .testimonial {
+      background: var(--soft-bg); border-radius: 40px; padding: 48px 40px;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 40px;
+      margin: 60px 0; border: 1px solid #ddecf7;
+    }
+    .testimonial-quote { flex: 2 1 400px; }
+    .testimonial-quote i.fa-quote-left { color: var(--accent); font-size: 2.5rem; margin-bottom: 16px; opacity: .8; }
+    .testimonial-quote blockquote { font-size: 1.4rem; font-weight: 500; color: var(--text-dark); line-height: 1.5; margin-bottom: 20px; letter-spacing: -.01em; }
+    .author { display: flex; align-items: center; gap: 16px; }
+    .author-avatar { width: 54px; height: 54px; background: var(--primary); border-radius: 30px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.4rem; }
+    .author-info strong { display: block; font-weight: 700; }
+    .author-info span { color: var(--text-muted); font-size: .9rem; }
+    .testimonial-stats { flex: 1 1 180px; background: #fff; border-radius: 28px; padding: 28px 22px; text-align: center; box-shadow: var(--shadow-sm); }
+    .testimonial-stats .big { font-size: 2.2rem; font-weight: 800; color: var(--primary); }
+
+    /* cta */
+    .cta-section {
+      text-align: center; padding: 70px 30px; background: #fff; border-radius: 60px;
+      margin: 60px 0 40px; border: 1px solid #e2edf7; box-shadow: 0 10px 30px rgba(0,0,0,.02);
+    }
+    .cta-section h2 { font-size: 2.6rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 16px; }
+    .cta-section p { color: var(--text-muted); font-size: 1.15rem; max-width: 500px; margin: 0 auto 32px; }
+
+    /* footer */
+    .footer {
+      padding: 40px 0 30px; border-top: 1px solid #e2edf7;
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 24px; color: var(--text-muted); font-size: .9rem;
+    }
+    .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+    .footer-links a { text-decoration: none; color: var(--text-muted); }
+    .footer-links a:hover { color: var(--primary); }
+    .disclaimer { font-size: .8rem; color: #8a9eb0; max-width: 640px; margin-top: 16px; line-height: 1.5; }
+
+    @media (max-width: 800px) {
+      .hero h1 { font-size: 2.5rem; }
+      .section-head h2 { font-size: 2rem; }
+      .navbar { flex-direction: column; align-items: flex-start; }
+      .nav-links { flex-wrap: wrap; gap: 18px; }
+      .earnings-box { padding: 28px; }
+    }
+    @media (max-width: 500px) {
+      .hero h1 { font-size: 2rem; }
+      .stats { padding: 24px; }
+      .cta-section h2 { font-size: 2rem; }
+      .plan-tab { padding: 10px 18px; font-size: .85rem; }
+    }
+
+    /* disable click for demo buttons */
+    .btn, .btn-card { pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- nav -->
+    <nav class="navbar">
+      <div class="logo"><i class="fas fa-bolt"></i><span>NexaSpring</span></div>
+      <div class="nav-links">
+        <a href="#">Opportunity</a>
+        <a href="#plans">Comp plans</a>
+        <a href="#">Products</a>
+        <a href="#">Success</a>
+        <a href="#" class="btn btn-primary">Join free</a>
+      </div>
+    </nav>
+
+    <!-- hero -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge"><i class="fas fa-rocket" style="margin-right:6px;"></i> 5 plans · real numbers</div>
+        <h1>Choose your plan. <span class="highlight">Build real income.</span></h1>
+        <p>From a $399 starter entry to a $200K lifetime top‑up — our tiered compensation structure scales with your ambition.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-accent"><i class="fas fa-user-plus" style="margin-right:8px;"></i>Start free</a>
+          <a href="#plans" class="btn btn-outline">Compare plans</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="network-graphic">
+          <div class="node"><i class="fas fa-user"></i> You</div>
+          <div class="node"><i class="fas fa-users"></i> Team</div>
+          <div class="node center-node"><i class="fas fa-chart-line"></i> 2% + 6%</div>
+          <div class="node"><i class="fas fa-layer-group"></i> 9 levels</div>
+          <div class="node"><i class="fas fa-arrow-up"></i> Auto‑upgrade</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- stats -->
+    <div class="stats">
+      <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">Entry plans</div></div>
+      <div class="stat-item"><div class="stat-number">2%</div><div class="stat-label">Team bonus (levels 1–5)</div></div>
+      <div class="stat-item"><div class="stat-number">6%</div><div class="stat-label">Direct referral</div></div>
+      <div class="stat-item"><div class="stat-number">9–20</div><div class="stat-label">Payable levels</div></div>
+    </div>
+
+    <!-- steps -->
+    <div class="section-head">
+      <span class="section-tag">How it works</span>
+      <h2>Three steps to your first payout</h2>
+      <p>No inventory. No shipping. Just share your link and build your two‑person team.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-icon"><i class="fas fa-crown"></i></div>
+        <h3>Pick your plan</h3>
+        <p>Start with Plan 1 at $399 or jump straight into a larger top‑up tier.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon"><i class="fas fa-share-alt"></i></div>
+        <h3>Build 2 legs</h3>
+        <p>Each level doubles your team: 2 → 4 → 8 → 16… earn 2% team + 6% direct.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon"><i class="fas fa-arrow-up-right-dots"></i></div>
+        <h3>Auto‑upgrade</h3>
+        <p>Complete your level and the system automatically upgrades you to the next plan.</p>
+      </div>
+    </div>
+
+    <!-- ===== COMP PLAN EXPLORER ===== -->
+    <section id="plans" class="plans-section">
+      <div class="section-head">
+        <span class="section-tag">Compensation structure</span>
+        <h2>5 plans. Real numbers. No guesswork.</h2>
+        <p>Click a plan to see its full level breakdown, rates, and projected income. All figures are per the official structure.</p>
+      </div>
+
+      <!-- tabs -->
+      <div class="plan-tabs" id="planTabs">
+        <div class="plan-tab active" data-plan="1"><i class="fas fa-seedling"></i>Plan 1 · $399</div>
+        <div class="plan-tab" data-plan="2"><i class="fas fa-leaf"></i>Plan 2 · $2,998</div>
+        <div class="plan-tab" data-plan="3"><i class="fas fa-tree"></i>Plan 3 · $13,998</div>
+        <div class="plan-tab" data-plan="4"><i class="fas fa-mountain"></i>Plan 4 · $29,998</div>
+        <div class="plan-tab" data-plan="5"><i class="fas fa-infinity"></i>Plan 5 · $200,000</div>
+      </div>
+
+      <!-- PANEL 1 -->
+      <div class="plan-panel active" data-panel="1">
+        <div class="plan-meta">
+          <div class="meta-chip"><span class="label">Entry product</span><span class="value">$399</span></div>
+          <div class="meta-chip"><span class="label">Levels paid</span><span class="value">9</span></div>
+          <div class="meta-chip"><span class="label">Team bonus</span><span class="value">2% → 1.5%</span></div>
+          <div class="meta-chip"><span class="label">Direct referral</span><span class="value accent">6%</span></div>
+          <div class="meta-chip"><span class="label">Level‑1 income</span><span class="value accent">$15.96</span></div>
+        </div>
+        <div class="table-wrap">
+          <table class="plan-table">
+            <thead><tr><th>Level</th><th>Team size</th><th>Product volume</th><th>Rate</th><th>2% Present (income)</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td class="team">2</td><td>$798</td><td class="rate">2% team + 6% direct</td><td class="earn">$15.96</td></tr>
+              <tr><td>2</td><td class="team">4</td><td>$1,596</td><td class="rate">2% team + 6% direct</td><td class="earn">$31.92</td></tr>
+              <tr><td>3</td><td class="team">8</td><td>$3,192</td><td class="rate">2% team + 6% direct</td><td class="earn">$63.84</td></tr>
+              <tr><td>4</td><td class="team">16</td><td>$6,384</td><td class="rate">2% team + 6% direct</td><td class="earn">$127.68</td></tr>
+              <tr><td>5</td><td class="team">32</td><td>$12,768</td><td class="rate">2% team + 6% direct</td><td class="earn">$255.36</td></tr>
+              <tr><td>6</td><td class="team">64</td><td>$25,536</td><td class="rate">1.5% team + 6% direct</td><td class="earn">$383.04</td></tr>
+              <tr><td>7</td><td class="team">128</td><td>$51,072</td><td class="rate">1.5% team + 6% direct</td><td class="earn">$766.08</td></tr>
+              <tr><td>8</td><td class="team">256</td><td>$102,144</td><td class="rate">1.5% team + 6% direct</td><td class="earn">$1,532.16</td></tr>
+              <tr><td>9</td><td class="team">512</td><td>$204,288</td><td class="rate">1.5% team + 6% direct</td><td class="earn">$3,064.32</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="upgrade-badge"><i class="fas fa-rotate-right"></i> Automatic upgrade to the next level after completing all 9 levels.</div>
+        <div class="plan-note"><i class="fas fa-info-circle"></i><span>Entry product cost: <strong>$399</strong>. Team bonus starts at 2% for levels 1–5, then drops to 1.5% for levels 6–9. Direct referral stays at 6% on every level.</span></div>
+      </div>
+
+      <!-- PANEL 2 -->
+      <div class="plan-panel" data-panel="2">
+        <div class="plan-meta">
+          <div class="meta-chip"><span class="label">Top‑up</span><span class="value">$2,998</span></div>
+          <div class="meta-chip"><span class="label">Levels paid</span><span class="value">9</span></div>
+          <div class="meta-chip"><span class="label">Team bonus</span><span class="value">2% → 1.5%</span></div>
+          <div class="meta-chip"><span class="label">Direct referral</span><span class="value accent">6%</span></div>
+          <div class="meta-chip"><span class="label">Level‑1 income</span><span class="value accent">$59.96</span></div>
+        </div>
+        <div class="table-wrap">
+          <table class="plan-table">
+            <thead><tr><th>Level</th><th>Team size</th><th>Product volume</th><th>Rate</th><th>2% Present (income)</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td class="team">2</td><td>$5,996</td><td class="rate">2% team + 6% direct</td><td class="earn">$59.96</td></tr>
+              <tr><td>2</td><td class="team">4</td><td>$11,992</td><td class="rate">2% team + 6% direct</td><td class="earn">$119.92</td></tr>
+              <tr><td>3</td><td class="team">8</td><td>$23,984</td><td class="rate">2% team + 6% direct</td><td class="earn">$239.84</td></tr>
+              <tr><td>4</td><td class="team">16</td><td>$47,968</td><td class="rate">2% team + 6% direct</td><td class="earn">$479.68</td></tr>
+              <tr><td>5</td><td class="team">32</td><td>$95,936</td><td class="rate">2% team + 6% direct</td><td class="earn">$959.36</td></tr>
+              <tr><td>6</td><td class="team">64</td><td>$191,872</td><td class="rate">1.5% team + 6% direct</td><td class="earn">$1,439.04</td></tr>
+              <tr><td>7</td><td class="team">128</td><td>$383,744</td><td class="rate">1.5% team + 6% direct</td><td class="earn">$2,878.08</td></tr>
+              <tr><td>8</td><td class="team">256</td><td>$767,488</td><td class="rate">1.5% team + 6% direct</td><td class="earn">$5,756.16</td></tr>
+              <tr><td>9</td><td class="team">512</td><td>$1,534,976</td><td class="rate">1.5% team + 6% direct</td><td class="earn">$11,512.32</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="upgrade-badge"><i class="fas fa-rotate-right"></i> Automatic upgrade to Plan 3 after completing all 9 levels.</div>
+        <div class="plan-note"><i class="fas fa-info-circle"></i><span>Top‑up amount: <strong>$2,998</strong>. Same level structure as Plan 1, scaled by volume. Income column shows the 2% team payout only — direct 6% is paid on top.</span></div>
+      </div>
+
+      <!-- PANEL 3 -->
+      <div class="plan-panel" data-panel="3">
+        <div class="plan-meta">
+          <div class="meta-chip"><span class="label">Top‑up</span><span class="value">$13,998</span></div>
+          <div class="meta-chip"><span class="label">Levels paid</span><span class="value">9</span></div>
+          <div class="meta-chip"><span class="label">Team bonus</span><span class="value">2% → 1.5%</span></div>
+          <div class="meta-chip"><span class="label">Direct referral</span><span class="value accent">6%</span></div>
+          <div class="meta-chip"><span class="label">Level‑1 income</span><span class="value accent">$279.96</span></div>
+        </div>
+        <div class="table-wrap">
+          <table class="plan-table">
+            <thead><tr><th>Level</th><th>Team size</th><th>Product volume</th><th>Rate</th><th>2% Present (income)</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td class="team">2</td><td>$27,996</td><td class="rate">2% team + 6% direct</td><td class="earn">$279.96</td></tr>
+              <tr><td>2</td><td class="team">4</td><td>$
